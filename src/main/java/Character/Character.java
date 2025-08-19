@@ -1,18 +1,23 @@
 package Character;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Character {
+    private String          Name;
+    private String          Race    = "Human";
+    private String          Class   = "Warrior";
+    private String          Gender;
+    private int             Level   = 2;
+    private int             Physique;
+    private int             Mental;
+    private int             Astral;
+    private int             HealthPoints;
+    private int             Money;
+    private ArrayList<Item> Items   = new ArrayList<Item>();
+
     Scanner scanner = new Scanner(System.in);
-    private String Name;
-    private String Race = "Human";
-    private String Class = "Warrior";
-    private String Gender;
-    private int Level = 2;
-    private int Physique;
-    private int Mental;
-    private int Astral;
-    private int HealthPoints;
 
     public Character(String name, String race, String aClass, String gender, int level, int physique, int mental, int astral, int healthPoints) {
         Name = name;
@@ -30,7 +35,7 @@ public class Character {
 
     }
 
-    public void CreateCharacter() {
+    public void CreatePlayableCharacter() {
         System.out.flush();
         System.out.print("Name: ");
         Name = scanner.nextLine();
@@ -39,7 +44,13 @@ public class Character {
         Gender = scanner.nextLine();
 
         AttributePointDistribution();
+        HealthPoints = Physique + 1;
 
+        Items.addAll(List.of(
+                new Item("LongSword", 0, 2),
+                new Item("Dagger",1, 1),
+                new Item("Javelin",0, 0)
+        ));
     }
 
 
