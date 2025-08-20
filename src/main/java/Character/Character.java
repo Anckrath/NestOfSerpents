@@ -15,7 +15,7 @@ public class Character {
     private int             Astral;
     private int             HealthPoints;
     private int             Money;
-    private ArrayList<Item> Items   = new ArrayList<Item>();
+    private ArrayList<Item> Items   = new ArrayList<>();
 
     Scanner scanner = new Scanner(System.in);
 
@@ -35,7 +35,7 @@ public class Character {
 
     }
 
-    public void CreatePlayableCharacter() {
+    public void CreateMainCharacter() {
         System.out.flush();
         System.out.print("Name: ");
         Name = scanner.nextLine();
@@ -111,4 +111,55 @@ public class Character {
     }
 
 
+    /************************************* Getters and Setters *************************************/
+
+    /* Getter and Setter for Astral */
+    public int getAstral() {
+        return Astral;
+    }
+
+    public void setAstral(int astral) {
+        Astral = astral;
+    }
+
+    /* Getter and Setter for Mental */
+    public int getMental() {
+        return Mental;
+    }
+
+    public void setMental(int mental) {
+        Mental = mental;
+    }
+
+    /* Getter and Setter for Physique */
+    public int getPhysique() {
+        return Physique;
+    }
+
+    public void setPhysique(int physique) {
+        Physique = physique;
+    }
+
+    /* Getter and Setter for HealthPoints */
+    public int getHealthPoints() {
+        return HealthPoints;
+    }
+
+    public void setHealthPoints(int healthPoints) {
+        HealthPoints = healthPoints;
+    }
+
+    /* Getter and Setter for Items list */
+
+    public ArrayList<Item> getItems() {
+        return Items;
+    }
+
+    public Item getEquipment(int number) {
+        return Items.get(number);
+    }
+
+    public void setItems(ArrayList<Item> items) {
+        Items = items;
+    }
 }

@@ -14,4 +14,8 @@ public enum DiceType {
     DiceType(int sides) {
         this.sides = sides;
     }
+
+    public int getValue() {
+        return sides;
+    }
 }
