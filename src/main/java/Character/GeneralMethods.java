@@ -5,6 +5,9 @@ import static Character.DiceType.D6;
 public class GeneralMethods {
 
 
+    /* Constants */
+    public static final int DOUBLE_DAMAGE = 12;
+
     /* Function simulates dice throws */
     public int throwDice(DiceType diceType, int numberOfThrows){
         int result = 0;
@@ -25,27 +28,34 @@ public class GeneralMethods {
     * Defense   = Mental + Physique
     */
     public void calculateFightResult(Character mainCharacter, Character enemy){
-        int attackMainChar  = 0;
-        int attackEnemy     = 0;
-        int attackDiceThrow = 0;
-        int defenseMainChar = mainCharacter.getPhysique() + mainCharacter.getMental();
-        int defenseEnemy    = enemy.getPhysique() + enemy.getMental();
 
-        /* The main character starts the combat*/
+        /* Check who starts the combat */
         if (mainCharacter.getAstral() >= enemy.getAstral()){
-            attackDiceThrow = throwDice(D6, 2);
-            attackMainChar = mainCharacter.getPhysique() + attackDiceThrow + mainCharacter.getEquipment(0).getAttackBonus();
 
-            /* Check if the attack was successful */
-            if (attackMainChar >= defenseEnemy){
-                enemy.setAstral(enemy.getAstral() - 1);
-                enemy.setHealthPoints(enemy.getHealthPoints() - mainCharacter.getEquipment(0).getDamage());
-            }
+        } else {
 
         }
-        /* The enemy attacks */
-        else {
+    }
 
+
+    /* Function to check if the attack was successful and how much damage it caused */
+    private void calculateAttack(Character attacker, Character defender) {
+        int diceThrow       = throwDice(D6, 2);
+        int attackRating    = diceThrow + attacker.getPhysique();
+        int defenseRating   = defender.getPhysique() + defender.getMental();
+
+
+        if(attackRating >= defenseRating) {
+            defender.setAstral(defender.getAstral() - 1); // Every successful attack lowers the defender astral by one.
+
+            /* Check if normal or double damage should be applied */
+            if (diceThrow == DOUBLE_DAMAGE) {
+                defender.setHealthPoints(defender.getHealthPoints() - (attacker.getDamage() * 2));
+            } else {
+                defender.setHealthPoints(defender.getHealthPoints() - attacker.getDamage());
+            }
+        } else {
+            /* The attack misses and nothing happens */
         }
     }
 }

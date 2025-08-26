@@ -14,6 +14,7 @@ public class Character {
     private int             Mental;
     private int             Astral;
     private int             HealthPoints;
+    private int             Damage;
     private int             Money;
     private ArrayList<Item> Items   = new ArrayList<>();
 
@@ -149,8 +150,16 @@ public class Character {
         HealthPoints = healthPoints;
     }
 
-    /* Getter and Setter for Items list */
+    /* Getter and Setter for Damage */
+    public int getDamage() {
+        return Damage;
+    }
 
+    public void setDamage(int damage) {
+        Damage = damage;
+    }
+
+    /* Getter and Setter for Items list */
     public ArrayList<Item> getItems() {
         return Items;
     }
