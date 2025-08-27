@@ -30,9 +30,17 @@ public class GeneralMethods {
     public void calculateFightResult(Character mainCharacter, Character enemy){
 
         /* Check who starts the combat */
+        /* The main character attacks first */
         if (mainCharacter.getAstral() >= enemy.getAstral()){
+            calculateAttack(mainCharacter, enemy);
 
-        } else {
+            if (!isDefenderCharacterFleeingFromCombat(mainCharacter, enemy) && isAlive(enemy)){
+                calculateAttack(enemy, mainCharacter);
+            }
+
+        }
+        /* The enemy starts the combat */
+        else {
 
         }
     }
@@ -43,19 +51,36 @@ public class GeneralMethods {
         int diceThrow       = throwDice(D6, 2);
         int attackRating    = diceThrow + attacker.getPhysique();
         int defenseRating   = defender.getPhysique() + defender.getMental();
+        int damage          = 0;
 
-
+        /* Check if the attack hits */
         if(attackRating >= defenseRating) {
             defender.setAstral(defender.getAstral() - 1); // Every successful attack lowers the defender astral by one.
 
-            /* Check if normal or double damage should be applied */
+            /* Calculate damage */
             if (diceThrow == DOUBLE_DAMAGE) {
-                defender.setHealthPoints(defender.getHealthPoints() - (attacker.getDamage() * 2));
+                damage = defender.getHealthPoints() - (attacker.getDamage() * 2);
             } else {
-                defender.setHealthPoints(defender.getHealthPoints() - attacker.getDamage());
+                damage = defender.getHealthPoints() - attacker.getDamage();
             }
+            /* If the attackers mental is equal to zero the damage is reduced by one */
+            if (attacker.getMental() == 0){
+                damage -= 1;
+            }
+
+            defender.setHealthPoints(defender.getHealthPoints() - damage);
         } else {
             /* The attack misses and nothing happens */
         }
+    }
+
+    /* Function to check if the defender character will flee from the combat */
+    private boolean isDefenderCharacterFleeingFromCombat (Character  attacker, Character defender){
+        return attacker.getAstral() - 5 > defender.getAstral() || defender.getAstral() == 0;
+    }
+
+    /* Function to check if the character is alive */
+    private boolean isAlive(Character character){
+        return character.getHealthPoints() > 0;
     }
 }
